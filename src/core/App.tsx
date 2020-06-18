@@ -1,8 +1,10 @@
 import React from 'react';
+import { Main } from '../modules/main';
 
 function App() {
   return (
     <div className="App">
+      <Main />
     </div>
   );
 }
