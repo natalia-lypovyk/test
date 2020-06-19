@@ -1,11 +1,33 @@
-import React from 'react';
-import { Main } from '../modules/main';
+import React, { FC, useReducer } from 'react';
+import Grid from 'ustudio-ui/components/Grid/Grid';
+import Cell from 'ustudio-ui/components/Grid/Cell';
 
-function App() {
+import { Main } from '../modules/main';
+import { Form } from '../modules/main/Form';
+
+import { reducer } from '../shared/reducer';
+import { Context, initialState } from '../shared/context';
+
+const App: FC = () => {
+  const [{contacts}, dispatch] = useReducer(reducer, initialState);
+
   return (
-    <div className="App">
-      <Main />
-    </div>
+    <Context.Provider value={{ contacts, dispatch }}>
+      <Grid md={{ alignment: { horizontal: 'center'}}}>
+        <Cell
+          xl={{ size: 3 }}
+          lg={{ size: 2 }}
+        >
+          <Main />
+        </Cell>
+
+        <Cell
+          xl={{ size: 1 }}
+        >
+          <Form />
+        </Cell>
+      </Grid>
+    </Context.Provider>
   );
 }
 
