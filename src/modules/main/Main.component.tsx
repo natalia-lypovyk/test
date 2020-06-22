@@ -1,20 +1,30 @@
-import React, {FC, useContext, useEffect} from 'react';
+import React, { FC } from 'react';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
+import { css } from 'styled-components';
 
-import { Context } from "../../shared/context";
+//import { ContactType } from '../../core/App.types';
+
 import { CardList } from '../main/CardList';
 
 export const Main: FC = () => {
-  const { contacts, dispatch } = useContext(Context);
-
-  // useEffect(() => {
-  //   const storedContacts =  localStorage.setItem('contacts', state.name);
-  // }, []);
 
   return (
     <Flex direction='column'>
-      <Text variant='h2' align='center'>Contacts</Text>
+      <Text
+        variant='h2'
+        align='center'
+        styled={{
+          Text: css`
+            font-family: 'Julius Sans One', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            
+           `,
+        }}
+      >
+        Contacts
+      </Text>
       <CardList />
     </Flex>
   )

@@ -1,18 +1,23 @@
-import React, {FC, useContext} from 'react';
+import React, { FC, useEffect } from 'react';
 import Text from 'ustudio-ui/components/Text';
 
-import {Context} from "../../../shared/context";
+//import { ContactType } from '../../../core/App.types';
 
 import { Card } from '../Card';
 
 export const CardList: FC = () => {
-  const { contacts } = useContext(Context);
-
-  return contacts.length ? (
+  return(
     <>
-      {contacts.map(contact => <Card contact={contact} />)}
+      <Text>No contacts here</Text>
+      <Card />
     </>
-  ) : (
-    <Text>No contacts to show. Add someone!</Text>
   )
+
+  // return contacts.length ? (
+  //   <>
+  //     {contacts.map(contact => <Card contact={contact} />)}
+  //   </>
+  // ) : (
+  //   <Text>No contacts to show. Add someone!</Text>
+  // )
 };

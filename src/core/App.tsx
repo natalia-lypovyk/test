@@ -1,33 +1,58 @@
-import React, { FC, useReducer } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Grid from 'ustudio-ui/components/Grid/Grid';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 
 import { Main } from '../modules/main';
 import { Form } from '../modules/main/Form';
 
-import { reducer } from '../shared/reducer';
-import { Context, initialState } from '../shared/context';
+import { ContactType } from './App.types';
 
 const App: FC = () => {
-  const [{contacts}, dispatch] = useReducer(reducer, initialState);
+  const [contacts, setContacts] = useState<ContactType[]>([]);
+
+  useEffect(() => {
+    const storedContacts = localStorage.getItem('contacts')
+      ? JSON.parse(localStorage.getItem('contacts') as string)
+      : [];
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts))
+  }, [contacts]);
+
+  const addContact = (contact: ContactType) => {
+    setContacts([
+      ...contacts,
+      contact
+    ])
+  };
 
   return (
-    <Context.Provider value={{ contacts, dispatch }}>
-      <Grid md={{ alignment: { horizontal: 'center'}}}>
-        <Cell
-          xl={{ size: 3 }}
-          lg={{ size: 2 }}
-        >
-          <Main />
-        </Cell>
+    <Grid
+      md={{
+        alignment: {
+          horizontal: 'center'
+        }
+      }}
+      padding={{
+        top: 'large',
+        left: 'large',
+        right: 'large'
+      }}
+    >
+      <Cell
+        xl={{ size: 3 }}
+        lg={{ size: 2 }}
+      >
+        <Main />
+      </Cell>
 
-        <Cell
-          xl={{ size: 1 }}
-        >
-          <Form />
-        </Cell>
-      </Grid>
-    </Context.Provider>
+      <Cell
+        xl={{ size: 1 }}
+      >
+        <Form addContact={addContact} />
+      </Cell>
+    </Grid>
   );
 }
 
