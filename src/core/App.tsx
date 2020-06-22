@@ -14,6 +14,8 @@ const App: FC = () => {
     const storedContacts = localStorage.getItem('contacts')
       ? JSON.parse(localStorage.getItem('contacts') as string)
       : [];
+
+    setContacts(storedContacts);
   }, []);
 
   useEffect(() => {
@@ -21,6 +23,8 @@ const App: FC = () => {
   }, [contacts]);
 
   const addContact = (contact: ContactType) => {
+    localStorage.setItem('contacts', JSON.stringify(contact));
+
     setContacts([
       ...contacts,
       contact
@@ -44,7 +48,7 @@ const App: FC = () => {
         xl={{ size: 3 }}
         lg={{ size: 2 }}
       >
-        <Main />
+        <Main contacts={contacts} />
       </Cell>
 
       <Cell

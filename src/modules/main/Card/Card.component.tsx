@@ -1,19 +1,21 @@
 import React, { FC } from 'react';
-import Text from 'ustudio-ui/components/Text';
 
-import { CardProps } from './Card.types';
+import { ContactType } from "../../../core/App.types";
 
 import Styled from './Card.styles';
-//import { ContactType } from "../../../core/App.types";
 
-export const Card: FC = () => {
+interface Props {
+  contact: ContactType;
+}
+
+export const Card: FC<Props> = ({ contact }) => {
   return (
     <Styled.CardBlock direction='column'>
-      <Styled.Title>Name:</Styled.Title>
-      <Styled.Title>Phone:</Styled.Title>
-      <Styled.Title>Email:</Styled.Title>
-      <Styled.Title>BDay:</Styled.Title>
-      <Styled.Title>Comment:</Styled.Title>
+      <Styled.Title>Name: {contact.name}</Styled.Title>
+      <Styled.Title>Phone: {contact.phone}</Styled.Title>
+      <Styled.Title>Email: {contact.email}</Styled.Title>
+      <Styled.Title>BDay: {contact.birthday}</Styled.Title>
+      <Styled.Title>Comment: {contact.comment}</Styled.Title>
     </Styled.CardBlock>
   )
 };

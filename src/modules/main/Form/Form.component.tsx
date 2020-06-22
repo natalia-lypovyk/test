@@ -1,4 +1,4 @@
-import React, {FC, FormEvent, useEffect, useState} from 'react';
+import React, {FC, FormEvent, useState} from 'react';
 import { v4 as uuid } from 'uuid';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
 
@@ -11,11 +11,18 @@ interface Props {
 }
 
 export const Form: FC<Props> = ({ addContact }) => {
+  const obj: Record<string, boolean> = {
+    test: true
+  }
+
+  const [contact, setContact] = useState<ContactType>({} as ContactType)
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [birthday, setBirthday] = useState('');
   const [comment, setComment] = useState('');
+
+  //const { dispatch } = useContext(Context);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -30,7 +37,6 @@ export const Form: FC<Props> = ({ addContact }) => {
     };
 
     addContact(contact);
-
     setName('');
     setPhone('');
     setEmail('');

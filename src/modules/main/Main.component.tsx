@@ -3,11 +3,11 @@ import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 import { css } from 'styled-components';
 
-//import { ContactType } from '../../core/App.types';
+import { ContactType } from '../../core/App.types';
 
-import { CardList } from '../main/CardList';
+import { Card } from "./Card";
 
-export const Main: FC = () => {
+export const Main: FC<{ contacts: ContactType[] }> = ({ contacts }) => {
 
   return (
     <Flex direction='column'>
@@ -25,7 +25,15 @@ export const Main: FC = () => {
       >
         Contacts
       </Text>
-      <CardList />
+      {
+        contacts.length ? (
+          <>
+            {contacts.map(contact => <Card key={contact.id} contact={contact} />)}
+          </>
+        ) : (
+          <Text>No contacts to show. Add someone!</Text>
+        )
+      }
     </Flex>
   )
 };
