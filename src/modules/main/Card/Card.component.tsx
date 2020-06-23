@@ -6,12 +6,16 @@ import Styled from './Card.styles';
 
 interface Props {
   contact: ContactType;
+  removeContact: (contactId: string) => void;
 }
 
-export const Card: FC<Props> = ({ contact }) => {
+export const Card: FC<Props> = ({ contact, removeContact }) => {
   return (
     <Styled.CardBlock direction='column'>
-      <Styled.RemoveButton />
+      <Styled.RemoveButton
+        type='button'
+        onClick={() => removeContact(contact.id)}
+      />
       <Styled.Title><b>Name:</b> {contact.name}</Styled.Title>
       <Styled.Title><b>Phone:</b> {contact.phone}</Styled.Title>
       <Styled.Title><b>Email:</b> {contact.email}</Styled.Title>

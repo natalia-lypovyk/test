@@ -21,7 +21,6 @@ export const Form: FC<Props> = ({ addContact }) => {
       ...contact,
       id: uuid()
     });
-    console.log(contact)
 
     setContact({
       name: '',

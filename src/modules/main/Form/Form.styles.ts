@@ -6,14 +6,14 @@ import { ReactComponent as Email } from '../../../assets/image/email.svg';
 import { ReactComponent as Name } from '../../../assets/image/name.svg';
 
 const Form = styled.form`
-  padding: 10px;
+  padding: 55px 0 0;
   margin: 0 auto;
   position: fixed;
   top: 0;
 `;
 
 const Heading = styled(Text)`
-  margin: 10px;
+  margin: 10px 0 40px;
   
   font-family: 'Julius Sans One', sans-serif;
   font-size: 1.25rem;
@@ -58,16 +58,18 @@ const Button = styled.button`
   letter-spacing: 1px;  
   text-align: center;
   
-  transition: background 0.4s linear, transform 0.4s linear, box-shadow 0.4s linear;
+  transition: color 0.4s linear, background 0.4s linear, transform 0.4s linear, box-shadow 0.4s linear;
   
   &:hover {
     background: #2b7879; 
     box-shadow: 0 0 5px 1px rgba(232,240,236,1);
+    color: #c6d5b4;
   }
   
   &:active {
     transform: scale(0.95);
     box-shadow: 0 0 5px 1px rgba(232,240,236,1);
+    color: #c6d5b4;
   }
 `;
 

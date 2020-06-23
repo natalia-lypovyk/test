@@ -1,4 +1,5 @@
 html, body, #root {
     background: linear-gradient(50deg, #f3c680, hsla(179,54%,76%,1));
     font-family: 'Archivo', sans-serif;
+    color: #434c4c;
 }
