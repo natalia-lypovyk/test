@@ -3,17 +3,38 @@ import Text from 'ustudio-ui/components/Text';
 import styled from 'styled-components';
 
 const CardBlock = styled(Flex)`
+  position: relative;
   width: 300px;
   margin: 10px;
   padding: 10px;
+  
   border: 1px solid var(--c-neutral);
   border-radius: 4px;
   background: #fff;  
 `;
 
 const Title = styled(Text)`
-  font-family: 'Archivo', sans-serif;
   padding: 5px; 
+  
+  font-family: 'Archivo', sans-serif;  
 `;
 
-export default { CardBlock, Title };
+const RemoveButton = styled.button`
+  display: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 15px;
+  height: 15px; 
+  color: black;   
+  
+  &:hover {
+    display: block:
+  }
+  
+  &:after {
+    content: "×";
+  }
+`;
+
+export default { CardBlock, Title, RemoveButton };

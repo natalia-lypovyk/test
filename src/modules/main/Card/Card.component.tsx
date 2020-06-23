@@ -11,11 +11,12 @@ interface Props {
 export const Card: FC<Props> = ({ contact }) => {
   return (
     <Styled.CardBlock direction='column'>
-      <Styled.Title>Name: {contact.name}</Styled.Title>
-      <Styled.Title>Phone: {contact.phone}</Styled.Title>
-      <Styled.Title>Email: {contact.email}</Styled.Title>
-      <Styled.Title>BDay: {contact.birthday}</Styled.Title>
-      <Styled.Title>Comment: {contact.comment}</Styled.Title>
+      <Styled.RemoveButton />
+      <Styled.Title><b>Name:</b> {contact.name}</Styled.Title>
+      <Styled.Title><b>Phone:</b> {contact.phone}</Styled.Title>
+      <Styled.Title><b>Email:</b> {contact.email}</Styled.Title>
+      <Styled.Title><b>BDay:</b> {contact.birthday}</Styled.Title>
+      <Styled.Title><b>Comment:</b> {contact.comment}</Styled.Title>
     </Styled.CardBlock>
   )
 };

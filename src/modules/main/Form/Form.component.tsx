@@ -1,6 +1,7 @@
 import React, {FC, FormEvent, useState} from 'react';
 import { v4 as uuid } from 'uuid';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
+import TextArea from 'ustudio-ui/components/Input/TextArea';
 
 import { ContactType } from '../../../core/App.types';
 
@@ -11,37 +12,25 @@ interface Props {
 }
 
 export const Form: FC<Props> = ({ addContact }) => {
-  const obj: Record<string, boolean> = {
-    test: true
-  }
-
-  const [contact, setContact] = useState<ContactType>({} as ContactType)
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [comment, setComment] = useState('');
-
-  //const { dispatch } = useContext(Context);
+  const [contact, setContact] = useState<ContactType>({} as ContactType);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    const contact: ContactType = {
-      name,
-      phone,
-      email,
-      birthday,
-      comment,
+    addContact({
+      ...contact,
       id: uuid()
-    };
+    });
+    console.log(contact)
 
-    addContact(contact);
-    setName('');
-    setPhone('');
-    setEmail('');
-    setBirthday('');
-    setComment('');
+    setContact({
+      name: '',
+      phone: '',
+      email: '',
+      birthday: '',
+      comment: '',
+      id: ''
+    });
   };
 
   return (
@@ -52,47 +41,67 @@ export const Form: FC<Props> = ({ addContact }) => {
         <TextInput
           name='name'
           placeholder='John Smith'
-          value={name}
-          onChange={setName}
+          prefix={<Styled.NameIcon />}
+          value={contact.name}
+          onChange={value => setContact({
+            ...contact,
+            name: value
+          })}
         />
       </Styled.Label>
+
       <Styled.Label>
         Phone:
         <TextInput
           name='phone'
           placeholder='+380931111111'
+          value={contact.phone}
           prefix={<Styled.PhoneIcon />}
-          value={phone}
-          onChange={setPhone}
+          onChange={value => setContact({
+            ...contact,
+            phone: value
+          })}
         />
       </Styled.Label>
+
       <Styled.Label>
         Email:
         <TextInput
           name='email'
           placeholder='my-mail@gmail.com'
+          value={contact.email}
           prefix={<Styled.EmailIcon />}
-          value={email}
-          onChange={setEmail}
+          onChange={value => setContact({
+            ...contact,
+            email: value
+          })}
         />
       </Styled.Label>
+
       <Styled.Label>
         <input
           type='date'
           name='birthday'
           min='1900-01-01'
           max='2020-06-22'
-          onChange={e => setBirthday(e.target.value)}
-          value={birthday}
+          value={contact.birthday}
+          onChange={e => setContact({
+            ...contact,
+            birthday: e.target.value
+          })}
         />
       </Styled.Label>
+
       <Styled.Label>
         Add comment:
-        <TextInput
+        <TextArea
           name='comment'
           placeholder='Some extra info'
-          value={comment}
-          onChange={setComment}
+          value={contact.comment}
+          onChange={value => setContact({
+            ...contact,
+            comment: value
+          })}
         />
       </Styled.Label>
       <Styled.Button>Add</Styled.Button>
