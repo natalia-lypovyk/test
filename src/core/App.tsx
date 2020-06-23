@@ -10,6 +10,7 @@ import { Main } from '../modules/main';
 import { Form } from '../modules/main/Form';
 
 import { ContactType } from './App.types';
+import Styled from './App.styles';
 
 const App: FC = () => {
   const [contacts, setContacts] = useState<ContactType[]>([]);
@@ -93,11 +94,11 @@ const App: FC = () => {
 
       </Cell>
 
-      <Cell
+      <Styled.Block
         xl={{ size: 1 }}
       >
         <Form addContact={addContact} />
-      </Cell>
+      </Styled.Block>
     </Grid>
   );
 }

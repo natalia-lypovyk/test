@@ -7,9 +7,10 @@ import { ReactComponent as Name } from '../../../assets/image/name.svg';
 
 const Form = styled.form`
   padding: 55px 0 0;
-  margin: 0 auto;
+
   position: fixed;
   top: 0;
+
 `;
 
 const Heading = styled(Text)`
