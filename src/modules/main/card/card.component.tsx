@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 
-import { ContactType } from "../../../core/App.types";
+import { ContactType } from "../../../core/app.types";
 
-import Styled from './Card.styles';
+import Styled from './card.styles';
 
 interface Props {
   contact: ContactType;

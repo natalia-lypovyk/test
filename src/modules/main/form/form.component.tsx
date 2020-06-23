@@ -3,9 +3,9 @@ import { v4 as uuid } from 'uuid';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
 import TextArea from 'ustudio-ui/components/Input/TextArea';
 
-import { ContactType } from '../../../core/App.types';
+import { ContactType } from '../../../core/app.types';
 
-import Styled from './Form.styles';
+import Styled from './form.styles';
 
 interface Props {
   addContact: (con: ContactType) => void;

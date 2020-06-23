@@ -2,9 +2,9 @@ import React, { FC } from 'react';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 
-import { ContactType } from '../../core/App.types';
+import { ContactType } from '../../core/app.types';
 
-import { Card } from "./Card";
+import { Card } from "./card";
 
 interface Props {
   contacts: ContactType[];

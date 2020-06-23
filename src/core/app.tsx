@@ -7,10 +7,10 @@ import Text from "ustudio-ui/components/Text";
 import TextInput from 'ustudio-ui/components/Input/TextInput';
 
 import { Main } from '../modules/main';
-import { Form } from '../modules/main/Form';
+import { Form } from '../modules/main/form';
 
-import { ContactType } from './App.types';
-import Styled from './App.styles';
+import { ContactType } from './app.types';
+import Styled from './app.styles';
 
 const App: FC = () => {
   const [contacts, setContacts] = useState<ContactType[]>([]);
