@@ -4,8 +4,6 @@ html, body, #root {
 }
 
 html, body {
-  background: linear-gradient(50deg, #f3c680, hsla(179,54%,76%,1));
-}
-body, html {
-  height: 100%;
+  background: linear-gradient(50deg, #f3c680, hsla(179,54%,76%,1)) no-repeat;
+  background-size: cover;
 }
