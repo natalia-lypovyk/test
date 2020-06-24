@@ -1,26 +1,36 @@
-import React, {FC, FormEvent, useState} from 'react';
+import React, {FC, FormEvent, useContext, useState} from 'react';
 import { v4 as uuid } from 'uuid';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
 import TextArea from 'ustudio-ui/components/Input/TextArea';
 
-import { ContactType } from '../../../core/app.types';
+import { Contact } from '../../../shared/types';
 
 import Styled from './form.styles';
+import {Context} from '../../../shared/context';
 
-interface Props {
-  addContact: (con: ContactType) => void;
-}
-
-export const Form: FC<Props> = ({ addContact }) => {
-  const [contact, setContact] = useState<ContactType>({} as ContactType);
+export const Form: FC = () => {
+  const { dispatch, state: contacts } = useContext(Context);
+  const [contact, setContact] = useState<Contact>({} as Contact);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    addContact({
+    const newContact = {
       ...contact,
       id: uuid()
+    }
+
+    dispatch({
+      type: 'CREATE_CONTACT',
+      payload:  {
+        contact: newContact
+      }
     });
+
+    localStorage.setItem('contacts', JSON.stringify([
+      ...contacts,
+      newContact
+    ]));
 
     setContact({
       name: '',
