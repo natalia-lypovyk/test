@@ -16,11 +16,11 @@ export const Card: FC<Props> = ({ contact, removeContact }) => {
         type='button'
         onClick={() => removeContact(contact.id)}
       />
-      <Styled.Title><b>Name:</b> {contact.name}</Styled.Title>
-      <Styled.Title><b>Phone:</b> {contact.phone}</Styled.Title>
-      <Styled.Title><b>Email:</b> {contact.email}</Styled.Title>
-      <Styled.Title><b>BDay:</b> {contact.birthday}</Styled.Title>
-      <Styled.Title><b>Comment:</b> {contact.comment}</Styled.Title>
+      {contact.name && <Styled.Title><b>Name:</b> {contact.name}</Styled.Title>}
+      {contact.phone && <Styled.Title><b>Phone:</b> {contact.phone}</Styled.Title>}
+      {contact.email && <Styled.Title><b>Email:</b> {contact.email}</Styled.Title>}
+      {contact.birthday && <Styled.Title><b>BDay:</b> {contact.birthday}</Styled.Title>}
+      {contact.comment && <Styled.Title><b>Comment:</b> {contact.comment}</Styled.Title>}
     </Styled.CardBlock>
   )
 };
