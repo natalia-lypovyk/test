@@ -4,5 +4,6 @@ export interface ContactType {
   email: string,
   birthday: string,
   comment: string,
-  id: string
+  id: string,
+  group: string,
 };

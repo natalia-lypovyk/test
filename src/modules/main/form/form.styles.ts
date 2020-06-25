@@ -9,7 +9,54 @@ const Form = styled.form`
   padding: 55px 0 0;
   position: fixed;
   top: 0;
+`;
 
+const Input = styled.input`
+  height: 35px;
+  width: 100%;
+  display: block;
+  background: aliceblue;
+  
+  border-radius: 4px;
+  padding-left: 10px;
+  font-size: 1em;
+  
+  &::placeholder {
+    color: #6fa7a9;
+  }
+  
+  &:focus {
+    border-bottom: 1.5px solid #399E97;
+  }
+`;
+
+const TextArea = styled.textarea`
+  height: 60px;
+  width: 100%;
+  background: aliceblue;
+  border-radius: 4px;
+  padding: 10px;
+  
+  &::placeholder {
+    color: #6da7a9;
+  }
+  
+  &:focus {
+    border-bottom: 1.5px solid #399E97;
+  }
+`;
+
+const Select = styled.select`
+  background-color: aliceblue;
+  width: 100px;
+  height: 30px;
+  padding: 5px;
+  border-radius: 4px;
+`;
+
+const ErrorMessage = styled.p`
+  color: #c41235;
+  margin-left: 15px;  
 `;
 
 const Heading = styled(Text)`
@@ -73,4 +120,10 @@ const Button = styled.button`
   }
 `;
 
-export default { Form, Heading, Label, PhoneIcon, EmailIcon, NameIcon, Button };
+const GetSection = styled.fieldset`
+  border: 1.5px solid darkcyan;
+  border-radius: 4px;
+  padding: 5px;
+`;
+
+export default { Form, Input, TextArea, GetSection, Select, ErrorMessage, Heading, Label, PhoneIcon, EmailIcon, NameIcon, Button };

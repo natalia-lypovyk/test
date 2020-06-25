@@ -5,6 +5,7 @@ export interface Contact {
   birthday: string;
   comment: string;
   id: string;
+  group: string;
 }
 
 type Action = {

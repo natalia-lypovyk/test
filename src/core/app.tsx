@@ -4,7 +4,6 @@ import Grid from 'ustudio-ui/components/Grid/Grid';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
-import TextInput from 'ustudio-ui/components/Input/TextInput';
 
 import { Main } from '../modules/main';
 import { Form } from '../modules/main/form';
@@ -66,11 +65,11 @@ const App: FC = () => {
             >
               Contacts
             </Text>
-            <TextInput
+            <Styled.Input
               name='search'
               placeholder='Looking for...'
               value={query}
-              onChange={setQuery}
+              onChange={e => setQuery(e.target.value)}
             />
             <Main contacts={filteredContacts(contacts, query)} />
           </Flex>

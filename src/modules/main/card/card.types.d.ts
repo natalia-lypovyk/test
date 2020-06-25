@@ -5,4 +5,5 @@ export interface CardProps {
   birthday: string;
   comment: string;
   id: string;
+  group: string;
 };
