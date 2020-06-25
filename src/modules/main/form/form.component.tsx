@@ -20,6 +20,7 @@ export const Form: FC = () => {
   const { dispatch, state: contacts } = useContext(Context);
   const [contact, setContact] = useState<Contact>({} as Contact);
   const { register, handleSubmit, errors, getValues, triggerValidation, formState } = useForm<FormData>();
+  const { dirtyFields } = formState;
 
   const onSubmit = (data: FormData) => {
     console.log(data)
@@ -49,6 +50,8 @@ export const Form: FC = () => {
       id: '',
       group: ''
     });
+
+    console.log(dirtyFields);
   };
 
   return (
@@ -209,6 +212,11 @@ export const Form: FC = () => {
         <legend>getValues</legend>
         <pre>{JSON.stringify(getValues(), null, 2)}</pre>
       </Styled.GetSection>
+
+      <Styled.StateSection>
+        <legend>formState</legend>
+        <pre>{JSON.stringify(formState, null, 2)}</pre>
+      </Styled.StateSection>
     </Styled.Form>
   )
 };

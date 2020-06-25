@@ -6,9 +6,8 @@ import { ReactComponent as Email } from '../../../assets/image/email.svg';
 import { ReactComponent as Name } from '../../../assets/image/name.svg';
 
 const Form = styled.form`
-  padding: 55px 0 0;
-  position: fixed;
-  top: 0;
+  padding: 55px 0 0;  
+  position: relative;
 `;
 
 const Input = styled.input`
@@ -126,4 +125,13 @@ const GetSection = styled.fieldset`
   padding: 5px;
 `;
 
-export default { Form, Input, TextArea, GetSection, Select, ErrorMessage, Heading, Label, PhoneIcon, EmailIcon, NameIcon, Button };
+const StateSection = styled.fieldset`
+  border: 1.5px solid darkcyan;
+  border-radius: 4px;
+  padding: 5px;
+  position: absolute;
+  left: -250px;  
+  top: 130px;
+`;
+
+export default { Form, Input, TextArea, GetSection, StateSection, Select, ErrorMessage, Heading, Label, PhoneIcon, EmailIcon, NameIcon, Button };
