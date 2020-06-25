@@ -1,7 +1,6 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 
 import { ContactType } from '../../../core/app.types';
-import { Context } from '../../../shared/context';
 
 import Styled from './card.styles';
 
@@ -10,21 +9,11 @@ interface Props {
 }
 
 export const Card: FC<Props> = ({ contact }) => {
-  const { dispatch } = useContext(Context);
-
   return (
     <Styled.CardBlock direction='column'>
-      <Styled.RemoveButton
-        type='button'
-        onClick={() => dispatch({
-          type: 'DELETE_CONTACT',
-          payload: {
-            id: contact.id
-          }
-        })}
-      />
-      {contact.name && (
-        <Styled.Title><b>Name:</b> {contact.name}</Styled.Title>
+      <Styled.RemoveButton  />
+      {contact.fullName && (
+        <Styled.Title><b>Name:</b> {contact.fullName}</Styled.Title>
       )}
 
       {contact.phone && (

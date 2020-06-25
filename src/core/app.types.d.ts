@@ -1,5 +1,5 @@
 export interface ContactType {
-  name: string,
+  fullName: string,
   phone: string,
   email: string,
   birthday: string,

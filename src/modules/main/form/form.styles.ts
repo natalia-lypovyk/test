@@ -54,8 +54,12 @@ const Select = styled.select`
 `;
 
 const ErrorMessage = styled.p`
-  color: #c41235;
-  margin-left: 15px;  
+  color: #bf1650;
+  margin-left: 15px; 
+  
+  &::before {
+  display: inline;
+  content: "⚠ "; 
 `;
 
 const Heading = styled(Text)`
