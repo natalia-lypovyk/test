@@ -1,21 +1,29 @@
 import React, { FC, useState, useEffect, useReducer } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { css } from 'styled-components';
 import Grid from 'ustudio-ui/components/Grid/Grid';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
+import TextInput from 'ustudio-ui/components/Input/TextInput';
 
 import { Main } from '../modules/main';
 import { Form } from '../modules/main/form';
 
+import { Contact } from '../shared/types';
 import { Context, storedContacts } from '../shared/context';
 import { reducer } from '../shared/reducer';
-import { Contact } from '../shared/types';
+
 import Styled from './app.styles';
+
+type Search = {
+  search: string;
+}
 
 const App: FC = () => {
   const [contacts, dispatch] = useReducer(reducer, storedContacts);
   const [query, setQuery] = useState('');
+  const { control, handleSubmit } = useForm<Search>();
 
   const filteredContacts = (contacts: Contact[], query: string) => {
     return contacts.filter(contact => contact.name.includes(query))
@@ -25,6 +33,10 @@ const App: FC = () => {
     localStorage.setItem('contacts', JSON.stringify(contacts))
     }, [contacts]
   );
+
+  const onSubmit = (data: Search) => {
+    console.log(data)
+  };
 
   return (
     <Context.Provider value={{ state: contacts, dispatch }}>
@@ -65,12 +77,16 @@ const App: FC = () => {
           >
             Contacts
           </Text>
-          <Styled.Input
-            name='search'
-            placeholder='Looking for...'
-            value={query}
-            onChange={e => setQuery(e.target.value)}
-          />          
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              as={TextInput}
+              name='search'
+              placeholder='Looking for...'
+              control={control}
+              onChange={(data) => setQuery(data[0])}
+            />
+          </form>
+
           <Main contacts={filteredContacts(contacts, query)} />
         </Flex>
 
@@ -82,7 +98,7 @@ const App: FC = () => {
         <Form />
       </Styled.Block>
     </Grid>
-  </Context.Provider>    
+  </Context.Provider>
   );
 }
 

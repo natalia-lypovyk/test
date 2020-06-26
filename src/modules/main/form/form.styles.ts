@@ -10,25 +10,6 @@ const Form = styled.form`
   position: relative;
 `;
 
-const Input = styled.input`
-  height: 35px;
-  width: 100%;
-  display: block;
-  background: aliceblue;
-  
-  border-radius: 4px;
-  padding-left: 10px;
-  font-size: 1em;
-  
-  &::placeholder {
-    color: #6fa7a9;
-  }
-  
-  &:focus {
-    border-bottom: 1.5px solid #399E97;
-  }
-`;
-
 const TextArea = styled.textarea`
   height: 60px;
   width: 100%;
@@ -43,23 +24,6 @@ const TextArea = styled.textarea`
   &:focus {
     border-bottom: 1.5px solid #399E97;
   }
-`;
-
-const Select = styled.select`
-  background-color: aliceblue;
-  width: 100px;
-  height: 30px;
-  padding: 5px;
-  border-radius: 4px;
-`;
-
-const ErrorMessage = styled.p`
-  color: #bf1650;
-  margin-left: 15px; 
-  
-  &::before {
-  display: inline;
-  content: "⚠ "; 
 `;
 
 const Heading = styled(Text)`
@@ -123,19 +87,18 @@ const Button = styled.button`
   }
 `;
 
+const ErrorMessage = styled.p`
+  color: #bf1650;  
+  
+  &::before {
+    display: inline;
+    content: "⚠ "; 
+`;
+
 const GetSection = styled.fieldset`
   border: 1.5px solid darkcyan;
   border-radius: 4px;
   padding: 5px;
 `;
 
-const StateSection = styled.fieldset`
-  border: 1.5px solid darkcyan;
-  border-radius: 4px;
-  padding: 5px;
-  position: absolute;
-  left: -250px;  
-  top: 130px;
-`;
-
-export default { Form, Input, TextArea, GetSection, StateSection, Select, ErrorMessage, Heading, Label, PhoneIcon, EmailIcon, NameIcon, Button };
+export default { Form, TextArea, GetSection, ErrorMessage, Heading, Label, PhoneIcon, EmailIcon, NameIcon, Button };

@@ -1,5 +1,4 @@
 import Flex from 'ustudio-ui/components/Flex';
-import Text from 'ustudio-ui/components/Text';
 import styled from 'styled-components';
 
 const RemoveButton = styled.button`
@@ -39,9 +38,4 @@ const CardBlock = styled(Flex)`
   }
 `;
 
-const Title = styled(Text)`
-  padding: 5px;   
-  font-family: 'Archivo', sans-serif;  
-`;
-
-export default { CardBlock, Title, RemoveButton };
+export default { CardBlock, RemoveButton };

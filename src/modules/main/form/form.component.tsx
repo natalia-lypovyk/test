@@ -1,34 +1,32 @@
-import React, { FC, useState, useContext } from 'react';
-import { useForm, ErrorMessage } from 'react-hook-form';
+import React, { FC, useContext, MouseEvent, Fragment } from 'react';
+import { useForm, ErrorMessage, useFieldArray, Controller } from 'react-hook-form';
 import { v4 as uuid } from 'uuid';
+import TextInput from 'ustudio-ui/components/Input/TextInput';
 
 import { Context } from '../../../shared/context';
-import { Contact } from "../../../shared/types";
+import { Contact, Phone } from '../../../shared/types';
 
 import Styled from './form.styles';
 
 type FormData = {
   name: string;
-  phone: string;
+  phones: Phone[];
   email: string;
   birthday: string;
   comment: string;
-  group: string;
   id: string;
 }
 
 export const Form: FC = () => {
   const { state: contacts, dispatch } = useContext(Context);
-  const [contact, setContact] = useState<Contact>({} as Contact);  
-  const [indexes, setIndexes] = useState<number[]>([]);
-  const [counter, setCounter] = useState(0);
-  const { register, handleSubmit, errors, getValues, triggerValidation, formState } = useForm<FormData>();
+  const { register, handleSubmit, errors, getValues, triggerValidation, control, reset } = useForm<FormData>();
+  const { fields, append, remove } = useFieldArray({ control, name: 'phones' });
 
   const onSubmit = (data: Contact) => {
     console.log(data);
 
     const newContact = {
-      ...contact,
+      ...data,
       id: uuid()
     }
 
@@ -44,125 +42,106 @@ export const Form: FC = () => {
       newContact
     ]));
 
-    setContact({
-      name: '',
-      phone: '',
-      email: '',
-      birthday: '',
-      comment: '',
-      id: ''
-    });
+    reset();
   };
 
-  const addContact = () => {
-    setIndexes(prev => [...prev, counter]);
-    setCounter(prev => prev + 1);
+  if (fields.length === 0) {
+    append({});
   }
-
-  const removeContact = (index: number) => () => {
-    setIndexes(prev => [...prev.filter(item => item !== index)]);
-    setCounter(prev => prev - 1);
-  }
-
-  const clearContacts = () => {
-    setIndexes([]);
-  };
 
   return (
     <Styled.Form
       onSubmit={handleSubmit(onSubmit)}
     >
       <Styled.Heading>New Contact</Styled.Heading>
-      {indexes.map(index => {
-        const fieldName = `contacts[${index}]`;
-        return (
-          <fieldset name={fieldName} key={fieldName}>
-            <Styled.Label>
-              Full Name:
-              <Styled.Input
-                name={`${fieldName}.name`}
-                ref={register({ required: 'This is required' })}
-                placeholder='John Smith'
-              />
-              <ErrorMessage errors={errors} name='name' as={<Styled.ErrorMessage />} />
-            </Styled.Label>
+      <Styled.Label>
+        Full Name:
+        <Controller
+          as={TextInput}
+          name='name'
+          prefix={<Styled.NameIcon />}
+          control={control}
+          rules={{ required: true, minLength: 3 }}
+          placeholder='Steve Jobs'
+        />
+        <ErrorMessage errors={errors} name='name'>
+          {({ message }) => <Styled.ErrorMessage>You should enter name</Styled.ErrorMessage>}
+        </ErrorMessage>
+      </Styled.Label>
 
+      {fields.map((item, index) => {
+        return (
+          <Fragment key={item.id}>
             <Styled.Label>
               Phone:
-              <Styled.Input
-                name={`${fieldName}.phone`}
-                type='tel'
-                ref={register}
+              <Controller
+                as={TextInput}
+                id={`phones[${index}]`}
+                name={`phones[${index}].phone`}
+                prefix={<Styled.PhoneIcon />}
+                control={control}
                 placeholder='+380931111111'
               />
             </Styled.Label>
-
-            <Styled.Label>
-              Email:
-              <Styled.Input
-                name={`${fieldName}.email`}
-                ref={register({
-                  required: true,
-                  pattern: /^\S+@\S+\.\S{2,4}$/
-                })}
-                placeholder='my-mail@gmail.com'
-              />
-              <ErrorMessage errors={errors} name='email' as={<Styled.ErrorMessage />} />
-            </Styled.Label>
-
-            <Styled.Label>
-              <Styled.Input
-                type='date'
-                name={`${fieldName}.birthday`}
-                ref={register}
-                min='1900-01-01'
-                max='2020-06-22'
-              />
-            </Styled.Label>
-
-            <Styled.Label>
-              Add comment:
-              <Styled.TextArea
-                name={`${fieldName}.comment`}
-                ref={register}
-                placeholder='Some extra info'
-              />
-            </Styled.Label>
-
-            <Styled.Label>
-              <Styled.Select
-                ref={register}
-                name={`${fieldName}.group`}
-              >
-                <option value='family'>Family</option>
-                <option value='friends'>Friends</option>
-                <option value='work'>Work</option>
-              </Styled.Select>
-            </Styled.Label>
-
             <Styled.Button
               type='button'
-              onClick={removeContact(index)}
+              onClick={() => remove(index)}
             >
-              Remove Contact
+              Remove
             </Styled.Button>
-          </fieldset>
+          </Fragment>
         )
       })}
 
       <Styled.Button
         type='button'
-        onClick={addContact}
+        onClick={(e: MouseEvent) => {
+          e.preventDefault();
+          append({});
+        }}
       >
-        Add Contact
+        Add phone
       </Styled.Button>
 
-      <Styled.Button
-        type='button'
-        onClick={clearContacts}
-      >
-        Clear All Contacts
-      </Styled.Button>
+      <Styled.Label>
+        Email:
+        <Controller
+          as={TextInput}
+          name='email'
+          prefix={<Styled.EmailIcon />}
+          control={control}
+          rules={{
+            required: true,
+            pattern: /^\S+@\S+\.\S{2,4}$/
+          }}
+          placeholder='my-mail@gmail.com'
+        />
+        {errors?.email?.type === 'required' && (
+          <Styled.ErrorMessage>You should enter email</Styled.ErrorMessage>
+        )}
+        {errors?.email?.type === 'pattern' && (
+          <Styled.ErrorMessage>You should enter valid email</Styled.ErrorMessage>
+        )}
+      </Styled.Label>
+
+      <Styled.Label>
+        <input
+          type='date'
+          name='birthday'
+          ref={register}
+          min='1900-01-01'
+          max='2020-06-22'
+        />
+      </Styled.Label>
+
+      <Styled.Label>
+        Add comment:
+        <Styled.TextArea
+          name='comment'
+          ref={register}
+          placeholder='Some extra info'
+        ></Styled.TextArea>
+      </Styled.Label>
 
       <Styled.Button>Submit</Styled.Button>
 
@@ -172,7 +151,6 @@ export const Form: FC = () => {
       {/*    setValue('name', 'Frodo');*/}
       {/*    setValue('email', 'frodo@gmail.com');*/}
       {/*    setValue('comment', 'Coming to Mount Doom, as usual');*/}
-      {/*    setValue('group', 'friends');*/}
       {/*  }}*/}
       {/*>*/}
       {/*  Set values*/}
@@ -214,11 +192,6 @@ export const Form: FC = () => {
         <legend>getValues</legend>
         <pre>{JSON.stringify(getValues(), null, 2)}</pre>
       </Styled.GetSection>
-
-      <Styled.StateSection>
-        <legend>formState</legend>
-        <pre>{JSON.stringify(formState, null, 2)}</pre>
-      </Styled.StateSection>
     </Styled.Form>
   )
 };

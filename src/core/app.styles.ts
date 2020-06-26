@@ -24,4 +24,4 @@ const Input = styled.input`
   }
 `;
 
-export default { Block, Input};
+export default { Block, Input };

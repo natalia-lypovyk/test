@@ -1,9 +1,10 @@
+import { Phone } from "../shared/types";
+
 export interface ContactType {
   fullName: string,
-  phone: string,
+  phones: Phone[],
   email: string,
   birthday: string,
   comment: string,
-  id: string,
-  group: string,
+  id: string
 };

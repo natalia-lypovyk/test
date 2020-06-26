@@ -1,20 +1,21 @@
 import React, { FC, useContext } from 'react';
+import Grid from 'ustudio-ui/components/Grid/Grid';
+import Cell from 'ustudio-ui/components/Grid/Cell';
+import Flex from'ustudio-ui/components/Flex';
+import Text from 'ustudio-ui/components/Text';
+import { css } from'styled-components';
 
 import { Contact } from '../../../shared/types';
 import { Context } from '../../../shared/context';
 
 import Styled from './card.styles';
 
-interface Props {
-  contact: Contact;
-}
-
-export const Card: FC<Props> = ({ contact }) => {
+export const Card: FC<{ contact: Contact }> = ({ contact }) => {
   const { dispatch } = useContext(Context);
 
   return (
     <Styled.CardBlock direction='column'>
-      <Styled.RemoveButton  
+      <Styled.RemoveButton
         type='button'
         onClick={() => dispatch({
           type: 'REMOVE_CONTACT',
@@ -24,23 +25,85 @@ export const Card: FC<Props> = ({ contact }) => {
         })}
       />
       {contact.name && (
-        <Styled.Title><b>Name:</b> {contact.name}</Styled.Title>
+        <Grid
+          margin={{
+            bottom: 'medium'
+          }}
+        >
+          <Cell>
+            <b>Name:</b>
+          </Cell>
+
+          <Cell>{contact.name}</Cell>
+        </Grid>
       )}
 
-      {contact.phone && (
-        <Styled.Title><b>Phone:</b> {contact.phone}</Styled.Title>
+      {contact.phones && (
+        <Grid
+          margin={{
+            bottom: 'medium'
+          }}
+        >
+          <Cell>
+            <Text
+              styled={{
+                Text: css`
+                margin-right: 15px;
+            `,
+              }}
+            >
+              <b>Phones:</b>
+            </Text>
+          </Cell>
+
+          <Cell>
+            <Flex direction='column'>
+              {contact.phones.map(({ phone }) => {
+                return (
+                  <Text key={phone}>{phone}</Text>
+                )
+              })}
+            </Flex>
+          </Cell>
+        </Grid>
       )}
 
       {contact.email && (
-        <Styled.Title><b>Email:</b> {contact.email}</Styled.Title>
+        <Grid
+          margin={{
+            bottom: 'medium'
+          }}
+        >
+          <Cell>
+            <b>Email:</b>
+          </Cell>
+
+          <Cell>{contact.email}</Cell>
+        </Grid>
       )}
 
       {contact.birthday && (
-        <Styled.Title><b>BDay:</b> {contact.birthday}</Styled.Title>
+        <Grid
+          margin={{
+            bottom: 'medium'
+          }}
+        >
+          <Cell>
+            <b>Birthday:</b>
+          </Cell>
+
+          <Cell>{contact.birthday}</Cell>
+        </Grid>
       )}
 
       {contact.comment && (
-        <Styled.Title><b>Comment:</b> {contact.comment}</Styled.Title>
+        <Grid>
+          <Cell>
+            <b>Comment</b>
+          </Cell>
+
+          <Cell>{contact.comment}</Cell>
+        </Grid>
       )}
     </Styled.CardBlock>
   )
