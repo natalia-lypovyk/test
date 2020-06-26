@@ -1,0 +1,13 @@
+html, body, #root {
+  font-family: 'Archivo', sans-serif;
+  color: #434c4c;
+}
+
+html, body {
+  background: linear-gradient(50deg, #f3c680, hsla(179,54%,76%,1)) no-repeat;
+  background-size: cover;
+}
+
+* {
+  box-sizing: border-box;
+}
