@@ -1,12 +1,14 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useContext } from 'react';
 import { useForm, ErrorMessage } from 'react-hook-form';
 import { v4 as uuid } from 'uuid';
 
+import { Context } from '../../../shared/context';
+import { Contact } from "../../../shared/types";
+
 import Styled from './form.styles';
-import {ContactType} from "../../../core/app.types";
 
 type FormData = {
-  fullName: string;
+  name: string;
   phone: string;
   email: string;
   birthday: string;
@@ -16,25 +18,40 @@ type FormData = {
 }
 
 export const Form: FC = () => {
+  const { state: contacts, dispatch } = useContext(Context);
+  const [contact, setContact] = useState<Contact>({} as Contact);  
   const [indexes, setIndexes] = useState<number[]>([]);
   const [counter, setCounter] = useState(0);
   const { register, handleSubmit, errors, getValues, triggerValidation, formState } = useForm<FormData>();
 
-    const onSubmit = (data: ContactType) => {
-    console.log(data)
+  const onSubmit = (data: Contact) => {
+    console.log(data);
 
-    // Object.keys(data).forEach(item => {
-    //   const obj = JSON.parse(item);
-    //   const itemId = uuid();
-    //   return {
-    //     ...obj,
-    //     id: itemId
-    //   }
-    // })
+    const newContact = {
+      ...contact,
+      id: uuid()
+    }
 
-    localStorage.setItem('contacts', JSON.stringify({
-      data
-    }));
+    dispatch({
+      type: 'CREATE_CONTACT',
+      payload: {
+        contact: newContact
+      }
+    });
+
+    localStorage.setItem('contacts', JSON.stringify([
+      ...contacts,
+      newContact
+    ]));
+
+    setContact({
+      name: '',
+      phone: '',
+      email: '',
+      birthday: '',
+      comment: '',
+      id: ''
+    });
   };
 
   const addContact = () => {
@@ -63,11 +80,11 @@ export const Form: FC = () => {
             <Styled.Label>
               Full Name:
               <Styled.Input
-                name={`${fieldName}.fullName`}
+                name={`${fieldName}.name`}
                 ref={register({ required: 'This is required' })}
                 placeholder='John Smith'
               />
-              <ErrorMessage errors={errors} name='fullName' as={<Styled.ErrorMessage />} />
+              <ErrorMessage errors={errors} name='name' as={<Styled.ErrorMessage />} />
             </Styled.Label>
 
             <Styled.Label>
@@ -165,7 +182,7 @@ export const Form: FC = () => {
         type='button'
         onClick={() => {
           const values = getValues();
-          const singleValue = getValues('fullName');
+          const singleValue = getValues('name');
 
           console.log('get', values, singleValue)
         }}
@@ -183,11 +200,11 @@ export const Form: FC = () => {
       <Styled.Button
         type='button'
         onClick={async () => {
-          const result = await triggerValidation('fullName');
+          const result = await triggerValidation('name');
           if (result) {
             console.log('valid input')
           }
-          console.log(result, 'Invalid input, Enter fullName!')
+          console.log(result, 'Invalid input, Enter name!')
         }}
       >
         Trigger to console

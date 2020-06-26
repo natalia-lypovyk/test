@@ -1,33 +1,34 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useReducer } from 'react';
 import { css } from 'styled-components';
 import Grid from 'ustudio-ui/components/Grid/Grid';
 import Cell from 'ustudio-ui/components/Grid/Cell';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 
-//import { Main } from '../modules/main';
+import { Main } from '../modules/main';
 import { Form } from '../modules/main/form';
 
+import { Context, storedContacts } from '../shared/context';
+import { reducer } from '../shared/reducer';
+import { Contact } from '../shared/types';
 import Styled from './app.styles';
 
 const App: FC = () => {
+  const [contacts, dispatch] = useReducer(reducer, storedContacts);
   const [query, setQuery] = useState('');
 
-  // const storedContacts = localStorage.getItem('contacts')
-  //   ? JSON.parse(localStorage.getItem('contacts') as string)
-  //   : [];
+  const filteredContacts = (contacts: Contact[], query: string) => {
+    return contacts.filter(contact => contact.name.includes(query))
+  };
 
-  // const filteredContacts = (contacts: ContactType[], query: string) => {
-  //   return contacts.filter(contact => contact.fullName.includes(query))
-  // };
-
-  // useEffect(() => {
-  //   localStorage.setItem('contacts', JSON.stringify(storedContacts))
-  //   }, [storedContacts]
-  // )
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts))
+    }, [contacts]
+  );
 
   return (
-    <Grid
+    <Context.Provider value={{ state: contacts, dispatch }}>
+      <Grid
       md={{
         alignment: {
           horizontal: 'center'
@@ -69,9 +70,8 @@ const App: FC = () => {
             placeholder='Looking for...'
             value={query}
             onChange={e => setQuery(e.target.value)}
-          />
-          {/*<Main />*/}
-          {/*<Main contacts={filteredContacts(contacts, query)} />*/}
+          />          
+          <Main contacts={filteredContacts(contacts, query)} />
         </Flex>
 
       </Cell>
@@ -82,6 +82,7 @@ const App: FC = () => {
         <Form />
       </Styled.Block>
     </Grid>
+  </Context.Provider>    
   );
 }
 

@@ -2,11 +2,11 @@ import React, { FC } from 'react';
 import Flex from 'ustudio-ui/components/Flex';
 import Text from 'ustudio-ui/components/Text';
 
-import { ContactType } from '../../core/app.types';
+import { Contact } from '../../shared/types';
 
 import { Card } from './card';
 
-export const Main: FC<{ contacts:ContactType[] } > = ({ contacts }) => {
+export const Main: FC<{ contacts:Contact[] } > = ({ contacts }) => {
   return (
     <Flex direction='column'>
       {

@@ -1,19 +1,30 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 
-import { ContactType } from '../../../core/app.types';
+import { Contact } from '../../../shared/types';
+import { Context } from '../../../shared/context';
 
 import Styled from './card.styles';
 
 interface Props {
-  contact: ContactType;
+  contact: Contact;
 }
 
 export const Card: FC<Props> = ({ contact }) => {
+  const { dispatch } = useContext(Context);
+
   return (
     <Styled.CardBlock direction='column'>
-      <Styled.RemoveButton  />
-      {contact.fullName && (
-        <Styled.Title><b>Name:</b> {contact.fullName}</Styled.Title>
+      <Styled.RemoveButton  
+        type='button'
+        onClick={() => dispatch({
+          type: 'REMOVE_CONTACT',
+          payload: {
+            id: contact.id
+          }
+        })}
+      />
+      {contact.name && (
+        <Styled.Title><b>Name:</b> {contact.name}</Styled.Title>
       )}
 
       {contact.phone && (
